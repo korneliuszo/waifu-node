@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ./external-layers/openembedded-core/oe-init-build-env . bitbake
+
+if [ "$#" -gt 0 ]; then
+    exec "$@"
+fi
