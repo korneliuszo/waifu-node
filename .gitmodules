@@ -1,0 +1,18 @@
+[submodule "external-layers/meta-openembedded"]
+	path = external-layers/meta-openembedded
+	url = https://git.openembedded.org/meta-openembedded
+[submodule "external-layers/meta-tegra"]
+	path = external-layers/meta-tegra
+	url = https://github.com/OE4T/meta-tegra
+[submodule "external-layers/meta-tegra-community"]
+	path = external-layers/meta-tegra-community
+	url = https://github.com/oe4t/meta-tegra-community
+[submodule "bitbake"]
+	path = bitbake
+	url = https://git.openembedded.org/bitbake
+[submodule "external-layers/openembedded-core"]
+	path = external-layers/openembedded-core
+	url = https://git.openembedded.org/openembedded-core
+[submodule "external-layers/meta-virtualization"]
+	path = external-layers/meta-virtualization
+	url = https://git.yoctoproject.org/meta-virtualization
