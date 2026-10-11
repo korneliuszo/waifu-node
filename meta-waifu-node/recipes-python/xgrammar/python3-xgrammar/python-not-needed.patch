@@ -1,0 +1,38 @@
+Upstream-Status: Inappropriate [hack]
+
+Index: python3-xgrammar-0.2.8/CMakeLists.txt
+===================================================================
+--- python3-xgrammar-0.2.8.orig/CMakeLists.txt
++++ python3-xgrammar-0.2.8/CMakeLists.txt
+@@ -103,12 +103,12 @@ if(NOT SKBUILD)
+     PATTERN "*.h"
+   )
+   # Install DLPack headers from the submodule
+-  install(
+-    DIRECTORY ${CMAKE_SOURCE_DIR}/3rdparty/dlpack/include/dlpack
+-    DESTINATION include
+-    FILES_MATCHING
+-    PATTERN "*.h"
+-  )
++#  install(
++#    DIRECTORY ${CMAKE_SOURCE_DIR}/3rdparty/dlpack/include/dlpack
++#    DESTINATION include
++#    FILES_MATCHING
++#    PATTERN "*.h"
++#  )
+ endif()
+ 
+ if(XGRAMMAR_BUILD_PYTHON_BINDINGS)
+Index: python3-xgrammar-0.2.8/cpp/tvm_ffi/CMakeLists.txt
+===================================================================
+--- python3-xgrammar-0.2.8.orig/cpp/tvm_ffi/CMakeLists.txt
++++ python3-xgrammar-0.2.8/cpp/tvm_ffi/CMakeLists.txt
+@@ -23,7 +23,7 @@ target_link_libraries(python_methods PUB
+ 
+ # TVM-FFI shared library: C++ bindings entry point
+ add_library(xgrammar_bindings SHARED tvm_ffi.cc)
+-tvm_ffi_configure_target(xgrammar_bindings STUB_DIR "${PROJECT_SOURCE_DIR}/python" STUB_INIT ON)
++tvm_ffi_configure_target(xgrammar_bindings STUB_DIR "${PROJECT_SOURCE_DIR}/python" STUB_DIR OFF)
+ install(TARGETS xgrammar_bindings DESTINATION .)
+ tvm_ffi_install(xgrammar_bindings DESTINATION .)
+ target_include_directories(xgrammar_bindings PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

@@ -1,0 +1,24 @@
+Upstream-Status: Inappropriate [oe specific] 
+
+Index: vllm-0.29.0/CMakeLists.txt
+===================================================================
+--- vllm-0.29.0.orig/CMakeLists.txt
++++ vllm-0.29.0/CMakeLists.txt
+@@ -20,6 +20,9 @@ set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+ set(CMAKE_HIP_STANDARD 20)
+ set(CMAKE_HIP_STANDARD_REQUIRED ON)
+ 
++include(FindCUDAToolkit)
++include(FindCUDA)
++enable_language(CUDA)
+ # PyTorch headers require C++20; GCC < 11.3 has incomplete C++20 support.
+ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "11.3")
+   message(FATAL_ERROR
+@@ -225,6 +228,7 @@ if(VLLM_GPU_LANG STREQUAL "CUDA")
+   clear_cuda_gencode_flags(CUDA_ARCH_FLAGS)
+   warn_if_ptx_arch_requested("${CUDA_ARCH_FLAGS}")
+   extract_unique_cuda_archs_ascending(CUDA_ARCHS "${CUDA_ARCH_FLAGS}")
++  #set(CUDA_ARCHS "11.0")
+   message(STATUS "CUDA target architectures: ${CUDA_ARCHS}")
+   # Filter the target architectures by the supported supported archs
+   # since for some files we will build for all CUDA_ARCHS.

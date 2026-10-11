@@ -1,0 +1,152 @@
+From 2bd357fc40ff14a5c5b01aa7b6c8e85e8c814bf4 Mon Sep 17 00:00:00 2001
+From: Ilies CHERGUI <ichergui@nvidia.com>
+Date: Fri, 8 May 2026 14:20:05 -0700
+Subject: [PATCH] Fixups for cross building in OE
+
+Upstream-Status: Inappropriate [OE-specific]
+Signed-off-by: Ilies CHERGUI <ichergui@nvidia.com>
+---
+ CMakeLists.txt                                | 46 -------------------
+ cmake/googletest.cmake                        | 25 +---------
+ .../CMakeLists.txt                            |  7 +++
+ include/cutlass/platform/platform.h           |  6 +--
+ 4 files changed, 11 insertions(+), 73 deletions(-)
+
+Index: cutlass-4.7.1/CMakeLists.txt
+===================================================================
+--- cutlass-4.7.1.orig/CMakeLists.txt
++++ cutlass-4.7.1/CMakeLists.txt
+@@ -171,42 +171,6 @@ set(CUTLASS_ENABLE_SELF_CONTAINED_INCLUD
+ 
+ ################################################################################
+ 
+-set(CUTLASS_NVCC_ARCHS_SUPPORTED "")
+-if (CUDA_VERSION VERSION_GREATER_EQUAL 11.4)
+-  list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 75 80 86 87)
+-endif()
+-if (CUDA_VERSION VERSION_GREATER_EQUAL 11.4 AND CUDA_VERSION VERSION_LESS 13.0)
+-  list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 70 72)
+-endif()
+-if (CUDA_VERSION VERSION_GREATER_EQUAL 11.8)
+-  list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 89 90)
+-endif()
+-if (CUDA_VERSION VERSION_GREATER_EQUAL 12.0)
+-  list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 90a)
+-endif()
+-
+-if (CUDA_VERSION VERSION_GREATER_EQUAL 12.8)
+-  list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 100 100a 120 120a 121 121a)
+-  if (CUDA_VERSION VERSION_LESS 13.0)
+-    list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 101 101a)
+-  else()
+-    list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 110 110a)
+-  endif()
+-endif()
+-
+-if (CUDA_VERSION VERSION_GREATER_EQUAL 12.9)
+-  list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 100f 120f 121f 103a 103f)
+-  if (CUDA_VERSION VERSION_LESS 13.0)
+-    list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 101f)
+-  else()
+-    list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 110f)
+-  endif()
+-endif()
+-
+-if (CUDA_VERSION VERSION_GREATER_EQUAL 13.0)
+-  list(APPEND CUTLASS_NVCC_ARCHS_SUPPORTED 110 110a)
+-endif()
+-
+ set(CUTLASS_NVCC_ARCHS ${CUTLASS_NVCC_ARCHS_SUPPORTED} CACHE STRING "The SM architectures requested.")
+ set(CUTLASS_NVCC_ARCHS_ENABLED ${CUTLASS_NVCC_ARCHS} CACHE STRING "The SM architectures to build code for.")
+ 
+@@ -790,19 +754,6 @@ install(
+ 
+ ################################################################################
+ 
+-if(NOT WIN32)
+-  # Add common library search paths so executables and libraries can load and run
+-  # without LD_LIBRARY_PATH being set.
+-  link_libraries(
+-    "-Wl,-rpath,'$$ORIGIN'"
+-    "-Wl,-rpath,'$$ORIGIN/../lib64'"
+-    "-Wl,-rpath,'$$ORIGIN/../lib'"
+-    "-Wl,-rpath,'${CUDA_TOOLKIT_ROOT_DIR}/lib64'"
+-    "-Wl,-rpath,'${CUDA_TOOLKIT_ROOT_DIR}/lib'"
+-    ${CMAKE_DL_LIBS}
+-    )
+-endif()
+-
+ ################################################################################
+ 
+ include(CTest)
+Index: cutlass-4.7.1/cmake/googletest.cmake
+===================================================================
+--- cutlass-4.7.1.orig/cmake/googletest.cmake
++++ cutlass-4.7.1/cmake/googletest.cmake
+@@ -26,27 +26,4 @@
+ # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+-include(FetchContent)
+-
+-set(GOOGLETEST_DIR "" CACHE STRING "Location of local GoogleTest repo to build against")
+-
+-if(GOOGLETEST_DIR)
+-  set(FETCHCONTENT_SOURCE_DIR_GOOGLETEST ${GOOGLETEST_DIR} CACHE STRING "GoogleTest source directory override")
+-endif()
+-
+-set(GTEST_REPOSITORY "https://github.com/google/googletest.git" CACHE STRING "GoogleTest repo to fetch")
+-FetchContent_Declare(
+-  googletest
+-  GIT_REPOSITORY ${GTEST_REPOSITORY}
+-  GIT_TAG        v1.14.0
+-  )
+-
+-FetchContent_GetProperties(googletest)
+-
+-if(NOT googletest_POPULATED)
+-  FetchContent_Populate(googletest)
+-  if (MSVC)
+-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+-  endif()
+-  add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR} EXCLUDE_FROM_ALL)
+-endif()
++find_package(GTest REQUIRED)
+Index: cutlass-4.7.1/examples/63_hopper_gemm_with_weight_prefetch/CMakeLists.txt
+===================================================================
+--- cutlass-4.7.1.orig/examples/63_hopper_gemm_with_weight_prefetch/CMakeLists.txt
++++ cutlass-4.7.1/examples/63_hopper_gemm_with_weight_prefetch/CMakeLists.txt
+@@ -36,3 +36,10 @@ cutlass_example_add_executable(
+ )
+ 
+ target_include_directories(63_hopper_gemm_with_weight_prefetch PUBLIC .)
++
++# This example uses non-type template parameters of class type (cute::Int<...>),
++# which require C++20.
++set_target_properties(63_hopper_gemm_with_weight_prefetch PROPERTIES
++  CXX_STANDARD 20
++  CUDA_STANDARD 20
++)
+Index: cutlass-4.7.1/include/cutlass/platform/platform.h
+===================================================================
+--- cutlass-4.7.1.orig/include/cutlass/platform/platform.h
++++ cutlass-4.7.1/include/cutlass/platform/platform.h
+@@ -663,15 +663,15 @@ struct alignment_of<ulong4> {
+   enum { value = 16 };
+ };
+ template <>
+-struct alignment_of<longlong4> {
++struct alignment_of<longlong4_32a> {
+   enum { value = 16 };
+ };
+ template <>
+-struct alignment_of<ulonglong4> {
++struct alignment_of<ulonglong4_32a> {
+   enum { value = 16 };
+ };
+ template <>
+-struct alignment_of<double4> {
++struct alignment_of<double4_32a> {
+   enum { value = 16 };
+ };
+ 

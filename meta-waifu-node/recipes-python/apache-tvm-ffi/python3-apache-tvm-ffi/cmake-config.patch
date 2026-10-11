@@ -1,0 +1,42 @@
+Upstream-Status: Inappropriate [oe specific]
+
+diff --git a/cmake/tvm_ffi-config.cmake b/cmake/tvm_ffi-config.cmake
+index 63333da3..5b647b1d 100644
+--- a/cmake/tvm_ffi-config.cmake
++++ b/cmake/tvm_ffi-config.cmake
+@@ -22,23 +22,35 @@ find_package(
+ )
+ 
+ # call tvm_ffi.config to get the cmake directory and set it to tvm_ffi_ROOT
++if(NOT DEFINED tvm_ffi_INCLUDE_DIR_OVERRIDE)
+ execute_process(
+   COMMAND "${Python_EXECUTABLE}" -m tvm_ffi.config --includedir
+   OUTPUT_STRIP_TRAILING_WHITESPACE
+   OUTPUT_VARIABLE tvm_ffi_INCLUDE_DIR
+ )
++else()
++	set(tvm_ffi_INCLUDE_DIR ${tvm_ffi_INCLUDE_DIR_OVERRIDE})
++endif()
+ 
++if(NOT DEFINED tvm_ffi_DLPACK_INCLUDE_DIR_OVERRIDE)
+ execute_process(
+   COMMAND "${Python_EXECUTABLE}" -m tvm_ffi.config --dlpack-includedir
+   OUTPUT_STRIP_TRAILING_WHITESPACE
+   OUTPUT_VARIABLE tvm_ffi_DLPACK_INCLUDE_DIR
+ )
++else()
++	set(tvm_ffi_DLPACK_INCLUDE_DIR ${tvm_ffi_DLPACK_INCLUDE_DIR_OVERRIDE})
++endif()
+ 
++if(NOT DEFINED tvm_ffi_LIB_FILES_OVERRIDE)
+ execute_process(
+   COMMAND "${Python_EXECUTABLE}" -m tvm_ffi.config --libfiles
+   OUTPUT_STRIP_TRAILING_WHITESPACE
+   OUTPUT_VARIABLE tvm_ffi_LIB_FILES
+ )
++else()
++	set(tvm_ffi_LIB_FILES ${tvm_ffi_LIB_FILES_OVERRIDE})
++endif()
+ 
+ message(STATUS "Finding libfiles ${tvm_ffi_LIB_FILES}")
+ 

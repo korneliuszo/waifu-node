@@ -1,0 +1,15 @@
+Upstream-Status: Inappropriate [oe specific]
+
+Index: vllm-0.29.0/pyproject.toml
+===================================================================
+--- vllm-0.29.0.orig/pyproject.toml
++++ vllm-0.29.0/pyproject.toml
+@@ -4,7 +4,7 @@ requires = [
+     "cmake>=3.26.1",
+     "ninja",
+     "packaging>=24.2",
+-    "setuptools>=77.0.3,<81.0.0",
++    "setuptools",
+     "setuptools-scm>=8.0",
+     "setuptools-rust>=1.9.0",
+     "torch == 2.13.0",

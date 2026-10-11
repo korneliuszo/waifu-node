@@ -1,0 +1,119 @@
+From 0817d1d4ca6ce0516ad8b66853c23a948c5180c9 Mon Sep 17 00:00:00 2001
+From: Peter Bergin <peter@berginkonsult.se>
+Date: Tue, 17 Feb 2026 00:00:00 +0000
+Subject: [PATCH 2/5] Fix CUDA build rules for cross compilation
+
+Remove CMAKE_CUDA_FLAGS appends that occur before enable_language(CUDA).
+These prevent CMake from initializing CMAKE_CUDA_FLAGS from the CUDAFLAGS
+environment variable, which contains the critical -Xcompiler --sysroot=...
+flags needed by the gcc-for-nvcc host compiler to find system headers.
+
+The removed flags are instead passed via CUDA_NVCC_EXTRA_FLAGS in the
+recipe, which flow through the CUDAFLAGS environment variable set by
+OE's cuda.bbclass.
+
+Also add CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES to c10_cuda, caffe2_nvrtc,
+torch_cuda_linalg, ATen_CUDA_INCLUDE and torch_python so that CUDA headers from the target
+sysroot (e.g. nvml.h, nvrtc.h, cusparse.h) are found during cross
+compilation. In a cross build, find_package(CUDAToolkit) only sees the
+native sysroot, so these headers are not on the default include path for
+CXX/CUDA targets.
+
+Upstream-Status: Inappropriate [OE-specific]
+
+AI-Generated: Uses Claude
+
+Signed-off-by: Peter Bergin <peter@berginkonsult.se>
+Signed-off-by: Peter Bergin <peter.bergin@1x.tech>
+---
+ CMakeLists.txt               | 4 ----
+ aten/src/ATen/CMakeLists.txt | 2 ++
+ c10/cuda/CMakeLists.txt      | 3 +++
+ caffe2/CMakeLists.txt        | 2 ++
+ torch/CMakeLists.txt         | 2 ++
+ 5 files changed, 9 insertions(+), 4 deletions(-)
+
+Index: python3-pytorch-2.14.0/CMakeLists.txt
+===================================================================
+--- python3-pytorch-2.14.0.orig/CMakeLists.txt
++++ python3-pytorch-2.14.0/CMakeLists.txt
+@@ -116,8 +116,8 @@ endif()
+ # This define is needed to preserve behavior given anticpated changes to
+ # cccl/thrust
+ # https://github.com/NVIDIA/cccl/blob/main/docs/libcudacxx/standard_api/numerics_library/complex.rst
+-string(APPEND CMAKE_CUDA_FLAGS
+-       " -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS")
++#string(APPEND CMAKE_CUDA_FLAGS
++#       " -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS")
+ 
+ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+ set(CMAKE_LINK_WHAT_YOU_USE TRUE)
+@@ -731,8 +731,6 @@ if(MSVC)
+   string(APPEND CMAKE_CUDA_FLAGS " -Xcompiler /FS")
+ endif(MSVC)
+ 
+-string(APPEND CMAKE_CUDA_FLAGS " -Xfatbin -compress-all")
+-
+ # Set linker max-page-size to 64KiB on AArch64 Linux
+ # And stub group size to 32MiB to workaround R_AARCH64_CALL26
+ # relocation errors
+Index: python3-pytorch-2.14.0/aten/src/ATen/CMakeLists.txt
+===================================================================
+--- python3-pytorch-2.14.0.orig/aten/src/ATen/CMakeLists.txt
++++ python3-pytorch-2.14.0/aten/src/ATen/CMakeLists.txt
+@@ -571,6 +571,8 @@ endif()
+ 
+ if(USE_CUDA)
+   list(APPEND ATen_CUDA_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/cuda)
++  # Add target-sysroot CUDA headers for cross compilation
++  list(APPEND ATen_CUDA_INCLUDE ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
+   # Next two lines are needed because TunableOp uses third-party/fmt
+   list(APPEND ATen_CUDA_INCLUDE $<TARGET_PROPERTY:fmt::fmt-header-only,INTERFACE_INCLUDE_DIRECTORIES>)
+   list(APPEND ATen_CUDA_DEPENDENCY_LIBS fmt::fmt-header-only)
+Index: python3-pytorch-2.14.0/c10/cuda/CMakeLists.txt
+===================================================================
+--- python3-pytorch-2.14.0.orig/c10/cuda/CMakeLists.txt
++++ python3-pytorch-2.14.0/c10/cuda/CMakeLists.txt
+@@ -82,6 +82,9 @@ if(NOT BUILD_LIBTORCHLESS)
+       $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
+       $<INSTALL_INTERFACE:include>)
+ 
++  target_include_directories(
++      c10_cuda PRIVATE ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
++
+ # ---[ Installation
+ # Note: for now, we will put all export path into one single Caffe2Targets group
+ # to deal with the cmake deployment need. Inside the Caffe2Targets set, the
+Index: python3-pytorch-2.14.0/caffe2/CMakeLists.txt
+===================================================================
+--- python3-pytorch-2.14.0.orig/caffe2/CMakeLists.txt
++++ python3-pytorch-2.14.0/caffe2/CMakeLists.txt
+@@ -609,6 +609,7 @@ if(USE_CUDA)
+   endif()
+ 
+   target_link_libraries(caffe2_nvrtc PRIVATE caffe2::nvrtc ${DELAY_LOAD_FLAGS})
++  target_include_directories(caffe2_nvrtc PRIVATE ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
+   install(TARGETS caffe2_nvrtc DESTINATION "${TORCH_INSTALL_LIB_DIR}")
+   if(USE_NCCL)
+     list(APPEND Caffe2_GPU_SRCS
+@@ -1142,6 +1143,7 @@ elseif(USE_CUDA)
+   if(BUILD_LAZY_CUDA_LINALG)
+     add_library(torch_cuda_linalg ${ATen_CUDA_LINALG_SRCS})
+     target_compile_definitions(torch_cuda_linalg PRIVATE USE_CUDA BUILD_LAZY_CUDA_LINALG)
++    target_include_directories(torch_cuda_linalg PRIVATE ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
+     # Library order is important during static linking
+     # `torch::magma` should be mentioned before other CUDA
+     # to transitively include all symbols present in torch_cuda/torch_cpu
+Index: python3-pytorch-2.14.0/torch/CMakeLists.txt
+===================================================================
+--- python3-pytorch-2.14.0.orig/torch/CMakeLists.txt
++++ python3-pytorch-2.14.0/torch/CMakeLists.txt
+@@ -143,6 +143,8 @@ if(USE_CUDA)
+     append_filelist("libtorch_python_cuda_core_sources" TORCH_PYTHON_SRCS)
+ 
+     list(APPEND TORCH_PYTHON_COMPILE_DEFINITIONS USE_CUDA)
++    # Add target-sysroot CUDA headers for cross compilation
++    list(APPEND TORCH_PYTHON_INCLUDE_DIRECTORIES ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
+     if(USE_CUDNN)
+         list(APPEND TORCH_PYTHON_LINK_LIBRARIES torch::cudnn)
+         list(APPEND TORCH_PYTHON_COMPILE_DEFINITIONS USE_CUDNN)

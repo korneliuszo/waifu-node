@@ -1,0 +1,14 @@
+Upstream-Status: Inappropriate [oe-specific]
+Index: python3-pytorch-2.14.0/cmake/PreBuildSteps.cmake
+===================================================================
+--- python3-pytorch-2.14.0.orig/cmake/PreBuildSteps.cmake
++++ python3-pytorch-2.14.0/cmake/PreBuildSteps.cmake
+@@ -90,7 +90,7 @@ endif()
+ # --- NCCL checkout ---
+ # Clone NCCL from the pinned tag if building with NCCL and not using
+ # system NCCL.
+-if(NOT USE_SYSTEM_NCCL)
++if(NOT ${USE_SYSTEM_NCCL})
+   # Only attempt if USE_DISTRIBUTED, USE_CUDA, USE_NCCL are not explicitly OFF.
+   set(_skip_nccl FALSE)
+   foreach(_var USE_DISTRIBUTED USE_CUDA USE_NCCL)

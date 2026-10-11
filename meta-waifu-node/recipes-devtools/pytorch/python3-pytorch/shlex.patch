@@ -1,0 +1,42 @@
+Upstream-Status: Inappropriate [oe-specific]
+Index: python3-pytorch-2.14.0/torch/utils/cpp_extension.py
+===================================================================
+--- python3-pytorch-2.14.0.orig/torch/utils/cpp_extension.py
++++ python3-pytorch-2.14.0/torch/utils/cpp_extension.py
+@@ -272,7 +272,7 @@ def _wrap_compiler(compiler: str | list[
+     Disabled when TORCH_NO_COMPILER_WRAPPER is set.
+     """
+     if isinstance(compiler, str):
+-        compiler = [compiler]
++        compiler = compiler.split()
+     # hipcc with ccache/sccache is currently broken
+     # I.e. compilation fails with
+     #  sccache: caused by: Compiler not supported: "sh: 1: /usr/local/cuda/bin/nvcc: not found\n
+@@ -884,12 +884,12 @@ class BuildExtension(_LazyBuildExt):
+ 
+             # NVCC does not allow multiple -ccbin/--compiler-bindir to be passed, so we avoid
+             # overriding the option if the user explicitly passed it.
+-            _ccbin = os.getenv("CC")
++            _ccbin = os.getenv("CXX_FOR_CUDA",os.getenv("CC")).split()
+             if (
+                 _ccbin is not None
+                 and not any(flag.startswith(('-ccbin', '--compiler-bindir')) for flag in cflags)
+             ):
+-                cflags.extend(['-ccbin', _ccbin])
++                cflags.extend(['-ccbin', _ccbin[0], "-Xcompiler", ' '.join(_ccbin[1:])])
+ 
+             return cflags
+ 
+Index: python3-pytorch-2.14.0/torch/_utils_internal.py
+===================================================================
+--- python3-pytorch-2.14.0.orig/torch/_utils_internal.py
++++ python3-pytorch-2.14.0/torch/_utils_internal.py
+@@ -36,7 +36,7 @@ if os.environ.get("TORCH_COMPILE_STROBEL
+ 
+ 
+ def _compute_torch_parent() -> str:
+-    torch_dir = os.path.dirname(os.path.abspath(__file__))
++    torch_dir = os.path.dirname(os.environ.get("TORCH_PATH"))
+     if os.path.basename(torch_dir) == "shared":
+         return os.path.dirname(os.path.dirname(torch_dir))
+     # In scikit-build-core editable installs with redirect mode, binary

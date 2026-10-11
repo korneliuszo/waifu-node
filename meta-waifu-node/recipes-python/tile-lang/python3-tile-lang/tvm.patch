@@ -1,0 +1,28 @@
+Upstream-Status: Inappropriate [hack]
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f620c1fe5..c721574c9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -566,7 +566,8 @@ if(USE_Z3)
+     )
+   else()
+     find_program(PATCHELF_EXECUTABLE patchelf)
+-    if (PATCHELF_EXECUTABLE)
++	if(0)
++	#if (PATCHELF_EXECUTABLE)
+       execute_process(
+         COMMAND ${PATCHELF_EXECUTABLE} --print-soname ${Z3_LIBRARY}
+         OUTPUT_VARIABLE Z3_SONAME
+diff --git a/cmake/config.cmake b/cmake/config.cmake
+index 37259a7c5..5d333c8a8 100644
+--- a/cmake/config.cmake
++++ b/cmake/config.cmake
+@@ -345,7 +345,7 @@ set(USE_CCACHE AUTO)
+ # - ON: Build from ffi/3rdparty/libbacktrace.
+ # - OFF: Don't use libbacktrace.
+ # - /path/to/libbacktrace: Looking for the libbacktrace header and static lib from a user-provided path. Report error if not found.
+-set(TVM_FFI_USE_LIBBACKTRACE ON)
++set(TVM_FFI_USE_LIBBACKTRACE OFF)
+ 
+ # Whether to install a signal handler to print a backtrace on segfault.
+ # Need to have TVM_FFI_USE_LIBBACKTRACE enabled.

@@ -1,0 +1,100 @@
+Upstream-Status: Inappropriate [hack]
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 51fc79a07..0c3ab31f9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -6,9 +6,9 @@ cmake_minimum_required(VERSION 3.26)
+ # Detect CUDA toolkit: tries host installation first, then falls back to
+ # pip-installed packages (env WITH_PIP_CUDA_TOOLCHAIN or auto-detect).
+ # Must be included before project() so CMAKE_CUDA_COMPILER is set.
+-include(${CMAKE_CURRENT_LIST_DIR}/cmake/FindPipCUDAToolkit.cmake)
++#include(${CMAKE_CURRENT_LIST_DIR}/cmake/FindPipCUDAToolkit.cmake)
+ 
+-project(TILE_LANG C CXX)
++project(TILE_LANG C CXX CUDA)
+ 
+ set(CMAKE_CXX_STANDARD 17)
+ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+@@ -211,13 +211,13 @@ if(NOT TILELANG_BACKEND_USER_SELECTED)
+     set(USE_ROCM ON)
+   else()
+     if($ENV{USE_CUDA})
+-      set(USE_CUDA ON)
++	  #set(USE_CUDA ON)
+     elseif(DEFINED ENV{USE_CUDA} AND NOT $ENV{USE_CUDA})
+       # Build CPU-only when we explicitly disable CUDA
+-      set(USE_CUDA OFF)
++	  #set(USE_CUDA OFF)
+     else()
+       message(STATUS "Enable CUDA support by default.")
+-      set(USE_CUDA ON)
++	  #set(USE_CUDA ON)
+     endif()
+   endif()
+ endif()
+@@ -307,11 +307,11 @@ elseif(USE_ROCM)
+ elseif(USE_CUDA)
+   set(CMAKE_CUDA_STANDARD 17)
+   find_package(CUDAToolkit REQUIRED)
+-  set(CMAKE_CUDA_COMPILER "${CUDAToolkit_BIN_DIR}/nvcc")
++  #set(CMAKE_CUDA_COMPILER "${CUDAToolkit_BIN_DIR}/nvcc")
+   add_compile_definitions("CUDA_MAJOR_VERSION=${CUDAToolkit_VERSION_MAJOR}")
+ 
+   # Set `USE_CUDA=/usr/local/cuda-x.y`
+-  cmake_path(GET CUDAToolkit_BIN_DIR PARENT_PATH USE_CUDA)
++  #cmake_path(GET CUDAToolkit_BIN_DIR PARENT_PATH USE_CUDA)
+ 
+   if(TILELANG_USE_CUDA_STUBS)
+     if(WIN32 AND NOT CYGWIN)
+@@ -414,8 +414,8 @@ elseif(USE_CUDA)
+   )
+   list(APPEND TILE_LANG_SRCS ${TILE_LANG_CUDA_SRCS})
+ 
+-  list(APPEND TILE_LANG_INCLUDES ${CUDAToolkit_INCLUDE_DIRS})
+-  link_directories(${CUDAToolkit_LIBRARY_DIR} ${CUDAToolkit_LIBRARY_DIR}/stubs)
++  #list(APPEND TILE_LANG_INCLUDES ${CUDAToolkit_INCLUDE_DIRS})
++  #link_directories(${CUDAToolkit_LIBRARY_DIR} ${CUDAToolkit_LIBRARY_DIR}/stubs)
+ endif()
+ 
+ set(USE_Z3      ON CACHE STRING "Use Z3 SMT solver for TileLang optimizations")
+@@ -513,7 +513,7 @@ install(TARGETS tilelang_cython_wrapper
+ # Copy libz3.so to build folder to workaround isolated build env issue
+ if(USE_Z3 AND USE_PYPI_Z3)
+   get_target_property(Z3_LIBRARY_PATH z3::libz3 IMPORTED_LOCATION)
+-  install(FILES "${Z3_LIBRARY_PATH}" DESTINATION "${CMAKE_BINARY_DIR}/lib")
++  #install(FILES "${Z3_LIBRARY_PATH}" DESTINATION "${CMAKE_BINARY_DIR}/lib")
+   if(APPLE)
+     set_target_properties(tvm PROPERTIES BUILD_RPATH "@loader_path")
+   else()
+diff --git a/cmake/FindPipCUDAToolkit.cmake b/cmake/FindPipCUDAToolkit.cmake
+index 29cb3f364..1deb56c1e 100644
+--- a/cmake/FindPipCUDAToolkit.cmake
++++ b/cmake/FindPipCUDAToolkit.cmake
+@@ -17,6 +17,7 @@
+ # --- Try host CUDA first ---
+ find_package(CUDAToolkit QUIET)
+ if(CUDAToolkit_FOUND)
++  message(INFO wolololo)
+   return()
+ endif()
+ 
+diff --git a/cmake/pypi-z3/FindZ3.cmake b/cmake/pypi-z3/FindZ3.cmake
+index d7920f8f9..0f6a63c55 100644
+--- a/cmake/pypi-z3/FindZ3.cmake
++++ b/cmake/pypi-z3/FindZ3.cmake
+@@ -1,6 +1,7 @@
+ if(Z3_FOUND)
+     return()
+ endif()
++if(Z3_PATH STREQUAL "")
+ find_package(Python3 COMPONENTS Interpreter REQUIRED)
+ execute_process(
+     COMMAND "${Python3_EXECUTABLE}" -c "import z3; print(z3.__path__[0])"
+@@ -11,6 +12,7 @@ execute_process(
+ if(NOT Z3_PYTHON_RESULT EQUAL 0 OR Z3_PATH STREQUAL "")
+     message(FATAL_ERROR "Failed to locate z3 Python package. Ensure z3-solver>=4.13.0 is installed.")
+ endif()
++endif()
+ message("-- Find Z3 in path: ${Z3_PATH}")
+ find_path(Z3_INCLUDE_DIR NO_DEFAULT_PATH NAMES z3++.h PATHS ${Z3_PATH}/include)
+ find_library(Z3_LIBRARY NO_DEFAULT_PATH NAMES z3 libz3 PATHS ${Z3_PATH}/bin ${Z3_PATH}/lib ${Z3_PATH}/lib64)

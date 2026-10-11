@@ -1,0 +1,15 @@
+Upstream-Status: Inappropriate [oe-specific]
+
+Index: openai-2.54.0/pyproject.toml
+===================================================================
+--- openai-2.54.0.orig/pyproject.toml
++++ openai-2.54.0/pyproject.toml
+@@ -115,7 +115,7 @@ typecheck = { chain = [
+ "typecheck:mypy" = "mypy ."
+ 
+ [build-system]
+-requires = ["hatchling==1.26.3", "hatch-fancy-pypi-readme"]
++requires = ["hatchling", "hatch-fancy-pypi-readme"]
+ build-backend = "hatchling.build"
+ 
+ [tool.hatch.build]

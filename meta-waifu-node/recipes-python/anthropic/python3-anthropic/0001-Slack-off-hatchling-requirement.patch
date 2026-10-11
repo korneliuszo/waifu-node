@@ -1,0 +1,23 @@
+From 1e7990140a657191a508e98c15d71dbc8c436d78 Mon Sep 17 00:00:00 2001
+From: Korneliusz Osmenda <korneliuszo@gmail.com>
+Date: Thu, 23 Jul 2026 20:09:00 +0200
+Subject: [PATCH] Slack off hatchling requirement
+Upstream-Status: Inappropriate [oe-specific]
+
+---
+ pyproject.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 2010810..dfb0fe4 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -96,7 +96,7 @@ pydantic-v2 = [
+ ]
+ 
+ [build-system]
+-requires = ["hatchling==1.26.3", "hatch-fancy-pypi-readme"]
++requires = ["hatchling", "hatch-fancy-pypi-readme"]
+ build-backend = "hatchling.build"
+ 
+ [tool.hatch.build]

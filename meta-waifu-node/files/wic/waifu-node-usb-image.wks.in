@@ -1,0 +1,9 @@
+# ===========================================================================
+# waifu-node — WIC kickstart for USB pendrive deployment on Tegra
+# ===========================================================================
+
+part /boot --source bootimg_efi --sourceparams="loader=grub-efi,initrd=${INITRAMFS_IMAGE}-${MACHINE}.cpio.gz" --fstype vfat --label boot --active --align 4096 --active
+
+part / --source rootfs --fstype ext4 --label waifu-node-root --use-uuid --align 4096
+
+bootloader --append "clk_ignore_unused pd_ignore_unused" --timeout 5

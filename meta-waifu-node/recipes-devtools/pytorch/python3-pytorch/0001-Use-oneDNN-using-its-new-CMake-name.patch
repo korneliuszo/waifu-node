@@ -1,0 +1,57 @@
+
+MKLDNN is the old name but oneDNN uses "dnnl" now.
+
+Upstream-Status: Inappropriate [Yocto specific]
+---
+ aten/src/ATen/CMakeLists.txt | 6 +++---
+ cmake/Dependencies.cmake     | 4 ++--
+ cmake/public/mkldnn.cmake    | 6 +++---
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+Index: python3-pytorch-2.14.0/aten/src/ATen/CMakeLists.txt
+===================================================================
+--- python3-pytorch-2.14.0.orig/aten/src/ATen/CMakeLists.txt
++++ python3-pytorch-2.14.0/aten/src/ATen/CMakeLists.txt
+@@ -772,9 +772,9 @@ if(AT_NNPACK_ENABLED)
+   list(APPEND ATen_CPU_DEPENDENCY_LIBS nnpack) # cpuinfo is added below
+ endif()
+ 
+-if(MKLDNN_FOUND)
+-  list(APPEND ATen_CPU_DEPENDENCY_LIBS ${MKLDNN_LIBRARIES})
+-endif(MKLDNN_FOUND)
++if(dnnl_FOUND)
++  list(APPEND ATen_CPU_DEPENDENCY_LIBS DNNL::dnnl)
++endif(dnnl_FOUND)
+ 
+ if(USE_MKLDNN_ACL)
+     list(APPEND ATen_CPU_INCLUDE ${ACL_INCLUDE_DIRS})
+Index: python3-pytorch-2.14.0/cmake/Dependencies.cmake
+===================================================================
+--- python3-pytorch-2.14.0.orig/cmake/Dependencies.cmake
++++ python3-pytorch-2.14.0/cmake/Dependencies.cmake
+@@ -1560,9 +1560,9 @@ if(NOT INTERN_BUILD_MOBILE)
+   endif()
+   if(USE_MKLDNN)
+     include(${CMAKE_CURRENT_LIST_DIR}/public/mkldnn.cmake)
+-    if(MKLDNN_FOUND)
++    if(dnnl_FOUND)
+       set(AT_MKLDNN_ENABLED 1)
+-      include_directories(AFTER SYSTEM ${MKLDNN_INCLUDE_DIR})
++      include_directories(AFTER SYSTEM ${dnnl_INCLUDE_DIR})
+     else()
+       message(WARNING "MKLDNN could not be found.")
+       caffe2_update_option(USE_MKLDNN OFF)
+Index: python3-pytorch-2.14.0/cmake/Modules/FindMKLDNN.cmake
+===================================================================
+--- python3-pytorch-2.14.0.orig/cmake/Modules/FindMKLDNN.cmake
++++ python3-pytorch-2.14.0/cmake/Modules/FindMKLDNN.cmake
+@@ -12,7 +12,8 @@
+ #  MKLDNN_USE_NATIVE_ARCH : Whether native CPU instructions should be used in MKLDNN. This should be turned off for
+ #  general packaging to avoid incompatible CPU instructions. Default: OFF.
+ 
+-IF(NOT MKLDNN_FOUND)
++find_package(dnnl)
++IF(NOT dnnl_FOUND AND USE_MKDLL)
+   SET(MKLDNN_LIBRARIES)
+   SET(MKLDNN_INCLUDE_DIR)
+ 

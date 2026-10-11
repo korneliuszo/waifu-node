@@ -1,0 +1,35 @@
+Upstream-Status: Inappropriate [oe specific]
+
+diff --git a/cmake/external_projects/fmha_sm100.cmake b/cmake/external_projects/fmha_sm100.cmake
+index 052966b2755..f7407d9e62d 100644
+--- a/cmake/external_projects/fmha_sm100.cmake
++++ b/cmake/external_projects/fmha_sm100.cmake
+@@ -58,16 +58,16 @@ install(DIRECTORY "${FMHA_SM100_PY_ROOT}/cute/"
+   PATTERN "*.pyc" EXCLUDE
+   PATTERN ".git*" EXCLUDE)
+ 
+-install(DIRECTORY "${FMHA_SM100_PY_ROOT}/cutlass/include/"
+-  DESTINATION vllm/third_party/fmha_sm100/cutlass/include
+-  COMPONENT fmha_sm100
+-  PATTERN "__pycache__" EXCLUDE
+-  PATTERN "*.pyc" EXCLUDE
+-  PATTERN ".git*" EXCLUDE)
++#install(DIRECTORY "${FMHA_SM100_PY_ROOT}/cutlass/include/"
++#  DESTINATION vllm/third_party/fmha_sm100/cutlass/include
++#  COMPONENT fmha_sm100
++#  PATTERN "__pycache__" EXCLUDE
++#  PATTERN "*.pyc" EXCLUDE
++#  PATTERN ".git*" EXCLUDE)
+ 
+-install(DIRECTORY "${FMHA_SM100_PY_ROOT}/cutlass/tools/util/include/"
+-  DESTINATION vllm/third_party/fmha_sm100/cutlass/tools/util/include
+-  COMPONENT fmha_sm100
+-  PATTERN "__pycache__" EXCLUDE
+-  PATTERN "*.pyc" EXCLUDE
+-  PATTERN ".git*" EXCLUDE)
++#install(DIRECTORY "${FMHA_SM100_PY_ROOT}/cutlass/tools/util/include/"
++#  DESTINATION vllm/third_party/fmha_sm100/cutlass/tools/util/include
++#  COMPONENT fmha_sm100
++#  PATTERN "__pycache__" EXCLUDE
++#  PATTERN "*.pyc" EXCLUDE
++#  PATTERN ".git*" EXCLUDE)
