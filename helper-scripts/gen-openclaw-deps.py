@@ -28,9 +28,9 @@ import sys
 import re
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).resolve().parent #TODO: fix path as script was elsewhere
-SHRINKWRAP = SCRIPT_DIR / "openclaw" / "npm-shrinkwrap.json"
-PACKAGE_JSON = SCRIPT_DIR / "openclaw" / "package.json"
+SCRIPT_DIR = Path(__file__).resolve().parent #TODO: parametrize - for now scriptdir is workdir
+SHRINKWRAP = SCRIPT_DIR / "package-lock.json"
+PACKAGE_JSON = SCRIPT_DIR / "package.json"
 
 
 def load_shrinkwrap():
@@ -146,50 +146,40 @@ def build_deps(shrinkwrap, pkg_map=None):
     """
     shrinkwrap_pkgs = shrinkwrap.get("packages", {})
     pkg_map = pkg_map or {}
-    dep_map = {}
-
-    for key, info in shrinkwrap_pkgs.items():
-        url = info.get("resolved")
-        if not url:
-            continue
-        name = extract_packagename_from_url(url)
-        filename = extract_filename_from_url(url)
-        integrity = info.get("integrity", "")
-        dep_type = "prod"
-        # Use full shrinkwrap path as key so nested packages (e.g. proper-lockfile/node_modules/retry)
-        full_path = name +"@" + info.get("version", "?")
-        # don't collide with top-level ones (node_modules/retry)
-        if full_path not in dep_map:
-            dep_map[full_path] = {
-                "name": name,  # bare name for SRC_URI / cache DB
-                "filename": filename,
-                "url": url,
-                "integrity": integrity,
-                "version": info.get("version", "?"),
-                "type": dep_type,
-            }
-        
+       
     deps = []
     dev_only = []
 
     # Add all shrinkwrap deps — full path as key, bare name for SRC_URI
-    for full_path in sorted(dep_map.keys()):
-        info = dep_map[full_path]
-        dep_key = f"{full_path}::{info["name"]}::{info['filename']}::{info['url']}::{info['integrity']}::{info['version']}"
-        deps.append((dep_key, info["name"], info["version"], info["filename"], info["url"], info["integrity"], info["version"], info["type"]))
+    for full_path in sorted(shrinkwrap_pkgs.keys()):
+        info = shrinkwrap_pkgs[full_path]
+        name = full_path[13:]
+        if name == "":
+            continue
+        if info.get("inBundle",False):
+            continue
+        version = info["version"]
+        filename = _dev_only_filename(name, version)
+        url = info["resolved"]
+        integrity = info["integrity"]
+        deps.append((name, version, "dev", filename, url, integrity))
 
     # Find dev-only deps (in devDependencies but NOT in shrinkwrap)
     # Build full URL from registry convention and fetch sha512 integrity
     dev_deps_section = {}
     with open(PACKAGE_JSON) as f:
-        dev_deps_section = json.load(f).get("devDependencies", {})
+        jsn = json.load(f)
+        dev_deps_section = {**jsn.get("dependencies", {}),
+                            **jsn.get("devDependencies", {}),
+                            **jsn.get("optionalDependencies", {})};
     for name, version in sorted(dev_deps_section.items()):
         name_key = f"node_modules/{name}"
-        if name_key not in shrinkwrap_pkgs:
-            filename = _dev_only_filename(name, version)
-            url = _dev_only_url(name, filename)
-            integrity = _fetch_sha512(url)
-            dev_only.append((name, version, "dev", filename, url, integrity))
+        if name_key in shrinkwrap_pkgs and shrinkwrap_pkgs[name_key]["version"] == version:
+            continue
+        filename = _dev_only_filename(name, version)
+        url = _dev_only_url(name, filename)
+        integrity = _fetch_sha512(url)
+        dev_only.append((name, version, "dev", filename, url, integrity))
 
     return deps, dev_only
 
@@ -197,7 +187,8 @@ def build_deps(shrinkwrap, pkg_map=None):
 def format_deps(deps, dev_only=None):
     """Format deps as the full openclaw_deps.inc file."""
     lines = ['NPM_DEPS += " \\']
-    for dep_key, name, version, filename, url, integrity, version, dep_type in deps:
+    for name, version, dep_type, filename, url, integrity in deps:
+        dep_key = f"{name}@{version}::{name}::{filename}::{url}::{integrity}::{version}"
         lines.append(f"  {dep_key} \\")
     lines.append('"')
     lines.append('')
@@ -211,6 +202,8 @@ def format_deps(deps, dev_only=None):
             lines.append(f"  {dep_key} \\")
         lines.append('"')
         lines.append('')
+    else:
+        lines.append('DEV_DEPS += " "')
 
     lines.append('python () {')
     lines.append('    import base64')
@@ -250,12 +243,7 @@ def main():
 
     # Summary to stderr
     total = len(deps)
-    https = sum(1 for _, _, _, _, u, _, _, _ in deps if u and u.startswith("https://"))
-    type_counts = {"prod": 0, "dev": 0, "opt": 0}
-    for _, _, _, _, _, _, _, t in deps:
-        type_counts[t] = type_counts.get(t, 0) + 1
-    print(f"# {total} deps (https: {https}, rest: {total - https})", file=sys.stderr)
-    print(f"#   prod: {type_counts['prod']}, dev: {type_counts['dev']}, opt: {type_counts['opt']}", file=sys.stderr)
+    print(f"# {total} deps", file=sys.stderr)
     if dev_only:
         print(f"# {len(dev_only)} dev-only deps (not in shrinkwrap, full URLs in DEV_DEPS)", file=sys.stderr)
     print(f"# shrinkwrap: {SHRINKWRAP} ({len(shrinkwrap.get('packages', {}))} pkg entries)", file=sys.stderr)
