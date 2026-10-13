@@ -50,6 +50,8 @@ IMAGE_FEATURES:append = " \
 
 INITRAMFS_IMAGE = "waifu-node-initramfs"
 
+IMAGE_ROOTFS_SIZE = "0"
+
 # Image formats: .wic, .wic.bmap, .fitz
 IMAGE_FSTYPES:append = " wic wic.bmap"
 WKS_FILE = "waifu-node-usb-image.wks.in"
