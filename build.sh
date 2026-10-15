@@ -54,9 +54,11 @@ if ! docker image inspect "${IMAGE}" >/dev/null 2>&1; then
     docker build --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g) -t "${IMAGE}" .
 fi
 
+if [ -t 1 ] ; then TTYARG=-t ; else TTYARG= ; fi
+
 # Build command — individual ro volumes for source, rw for build dirs
 DOCKER_CMD=(
-    docker run -it --rm
+    docker run -i $TTYARG --rm
     --name "${CONTAINER}"
     --user ${UID}:$(id -g)
     -v "${SCRIPT_DIR}/bitbake:/workspace/bitbake:ro"
