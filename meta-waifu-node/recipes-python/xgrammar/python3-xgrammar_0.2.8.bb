@@ -31,7 +31,8 @@ inherit cmake cuda python3targetconfig
 DEPENDS = " \
     dlpack \
     python3-apache-tvm-ffi \
-    python3-apache-tvm-ffi-native \
+    python3 \
+    python3-typing-extensions \
 "
 
 RDEPENDS:${PN} = " \
@@ -57,6 +58,12 @@ export TORCH_PATH = "${STAGING_DIR_HOST}${PYTHON_SITEPACKAGES_DIR}/torch"
 export TORCH_CUDA_ARCH_LIST = "11.0"
 
 B = "${S}"
+
+inherit cmake-qemu
+
+do_compile:append(){
+    ${WORKDIR}/cmake-qemuwrapper ${STAGING_DIR_TARGET}/usr/bin/python3 -m tvm_ffi.stub.cli ${B}/python/ --dlls ${B}/python/xgrammar/libxgrammar_bindings.so --init-lib xgrammar --init-pypkg xgrammar --init-prefix xgrammar.
+}
 
 do_install(){
     mkdir -p ${D}${PYTHON_SITEPACKAGES_DIR}
