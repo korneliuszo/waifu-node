@@ -4,7 +4,7 @@
 ./build.sh bitbake waifu-node-usb-image
 ```
 
-## Deploy to /dev/sda
+## Deploy to /dev/sda (BE SURE WHAT /dev/sda IS or use gui tools to burn and expand partition to fit your media)
 ```bash
 sudo dd of=/dev/sda bs=4M if=build/tmp/deploy/images/jetson-agx-thor-devkit/waifu-node-usb-image-jetson-agx-thor-devkit.rootfs.wic
 sudo parted /dev/sda resizepart 2 450G
