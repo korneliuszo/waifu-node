@@ -36,7 +36,7 @@ Index: python3-pytorch-2.14.0/torch/_utils_internal.py
  
  def _compute_torch_parent() -> str:
 -    torch_dir = os.path.dirname(os.path.abspath(__file__))
-+    torch_dir = os.path.dirname(os.environ.get("TORCH_PATH"))
++    torch_dir = os.path.dirname(os.environ.get("TORCH_PATH",os.path.abspath(__file__)))
      if os.path.basename(torch_dir) == "shared":
          return os.path.dirname(os.path.dirname(torch_dir))
      # In scikit-build-core editable installs with redirect mode, binary
