@@ -33,7 +33,7 @@ Index: python3-apache-tvm-ffi-0.1.9.git/cmake/Utils/AddLibbacktrace.cmake
 ===================================================================
 --- python3-apache-tvm-ffi-0.1.9.git.orig/cmake/Utils/AddLibbacktrace.cmake
 +++ python3-apache-tvm-ffi-0.1.9.git/cmake/Utils/AddLibbacktrace.cmake
-@@ -1,91 +1 @@
+@@ -1,91 +1,4 @@
 -# Licensed to the Apache Software Foundation (ASF) under one
 -# or more contributor license agreements.  See the NOTICE file
 -# distributed with this work for additional information
@@ -125,3 +125,6 @@ Index: python3-apache-tvm-ffi-0.1.9.git/cmake/Utils/AddLibbacktrace.cmake
 -if (NOT MSVC)
 -  _libbacktrace_compile()
 -endif ()
++find_library(project_libbacktrace NAMES backtrace)
++add_library(libbacktrace SHARED IMPORTED)
++set_target_properties(libbacktrace PROPERTIES IMPORTED_LOCATION "${project_libbacktrace}")

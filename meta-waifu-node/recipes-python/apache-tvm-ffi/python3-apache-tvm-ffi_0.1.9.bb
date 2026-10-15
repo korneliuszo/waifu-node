@@ -49,6 +49,8 @@ do_install:append:class-target (){
         ln -s /usr/include/dlpack ${D}/usr/lib/python3.14/site-packages/tvm_ffi/include/ 
 }
 
-#PEP517_BUILD_OPTS:append = " ${@" ".join("-Ccmake.define."+define for define in (d.getVar("OECMAKE_ARGS",expand=True).split()))} "
+SYSROOT_DIRS += "${bindir}"
 
-PEP517_BUILD_OPTS:class-native:append = "-Ccmake.define.TVM_FFI_USE_LIBBACKTRACE=0"
+PEP517_BUILD_OPTS:append = " -Ccmake.define.CMAKE_TOOLCHAIN_FILE=${WORKDIR}/toolchain.cmake "
+
+PEP517_BUILD_OPTS:append:class-native = "-Ccmake.define.TVM_FFI_USE_LIBBACKTRACE=0"
