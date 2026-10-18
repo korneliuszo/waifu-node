@@ -29,6 +29,7 @@ PACKAGE_INSTALL:append = " \
     tegra-firmware \
     htop \
     openclaw \
+    python3-comfyui \
     cuda-toolkit \
     python3-pytorch \
     l4t-usb-device-mode \

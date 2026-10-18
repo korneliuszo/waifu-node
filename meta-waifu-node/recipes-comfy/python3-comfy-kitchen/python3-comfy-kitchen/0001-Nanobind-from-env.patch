@@ -1,0 +1,38 @@
+From ea527e0d9f07d074b22e75a429cf530976d7b26d Mon Sep 17 00:00:00 2001
+From: Korneliusz Osmenda <korneliuszo@gmail.com>
+Date: Thu, 15 Oct 2026 21:53:36 +0200
+Subject: [PATCH] Nanobind from env
+
+Upstream-Status: Inappropriate [oe specific]
+
+---
+ comfy_kitchen/backends/cuda/CMakeLists.txt | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
+
+diff --git a/comfy_kitchen/backends/cuda/CMakeLists.txt b/comfy_kitchen/backends/cuda/CMakeLists.txt
+index 808a185..f1e0dc0 100644
+--- a/comfy_kitchen/backends/cuda/CMakeLists.txt
++++ b/comfy_kitchen/backends/cuda/CMakeLists.txt
+@@ -46,18 +46,7 @@ endif()
+ find_package(Python COMPONENTS Interpreter Development.Module REQUIRED Development.SABIModule)
+ 
+ # Find nanobind
+-execute_process(
+-    COMMAND "${Python_EXECUTABLE}" -c "import nanobind; print(nanobind.cmake_dir())"
+-    OUTPUT_VARIABLE NB_DIR
+-    OUTPUT_STRIP_TRAILING_WHITESPACE
+-    RESULT_VARIABLE NB_RESULT
+-)
+-
+-if(NOT NB_RESULT EQUAL 0)
+-    message(FATAL_ERROR "nanobind not found. Install with: pip install nanobind")
+-endif()
+-
+-list(APPEND CMAKE_PREFIX_PATH "${NB_DIR}")
++list(APPEND CMAKE_PREFIX_PATH "$ENV{NB_DIR}")
+ find_package(nanobind CONFIG REQUIRED)
+ 
+ # Check CUDA version
+-- 
+2.53.0
+
