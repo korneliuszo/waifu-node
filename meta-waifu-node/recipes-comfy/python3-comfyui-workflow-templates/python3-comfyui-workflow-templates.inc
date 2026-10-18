@@ -13,3 +13,6 @@ SRC_URI = "git://github.com/Comfy-Org/workflow_templates;nobranch=1;protocol=htt
 
 inherit python_setuptools_build_meta
 
+do_configure:prepend(){
+    nativepython3 scripts/sync/sync_bundles.py
+}
