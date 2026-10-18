@@ -28,10 +28,23 @@ OMP_NUM_THREADS=10 vllm \
     --enable-auto-tool-choice \
     --tool-call-parser qwen3_coder \
     --gpu-memory-utilization 0.65  \
-    --speculative-config '{"method":"mtp","num_speculative_tokens":3}' \
     --enable-prefix-caching \
     --enable-expert-parallel \
-    --kv-cache-dtype fp8 \
-    --attention-config.indexer_kv_dtype fp8 \
+    --max-model-len 262144 \
+
+```
+## Run comfy
+```bash
+export CUDA_HOME=/usr/local/cuda-13.2
+export CUDA_PATH=/usr/local/cuda-13.2
+export C_INCLUDE_PATH=$C_INCLUDE_PATH:/usr/local/cuda-13.2/include
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda-13.2/include
+
+export TRITON_PTXAS_PATH="$CUDA_HOME/bin/ptxas"
+export TRITON_PTXAS_BLACKWELL_PATH="$TRITON_PTXAS_PATH"
+export TORCH_CUDA_ARCH_LIST=11.0
+export CXX=aarch64-oe-linux-g++
+export CC=aarch64-oe-linux-gcc
+python3 /opt/python3-comfyui/0.40.0/main.py
 
 ```
