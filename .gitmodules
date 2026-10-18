@@ -16,3 +16,6 @@
 [submodule "external-layers/meta-virtualization"]
 	path = external-layers/meta-virtualization
 	url = https://git.yoctoproject.org/meta-virtualization
+[submodule "external-layers/meta-browser"]
+	path = external-layers/meta-browser
+	url = https://github.com/ossystems/meta-browser

@@ -40,6 +40,8 @@ PACKAGE_INSTALL:append = " \
     rsync \
     python3-dev \
     sshfs-fuse \
+    weston \
+    firefox \
 "
 
 IMAGE_FEATURES:append = " \
