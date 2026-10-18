@@ -10,7 +10,7 @@ HOMEPAGE = "https://github.com/huggingface/transformers"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=d15f16de23b5d7f8e28dd073d2ed8b28"
 
-SRC_URI = "git://github.com/huggingface/transformers;protocol=https;nobranch=1;rev=5eddc12edfaf8cafde8c9bae4ccb12f8a139b4f9"
+SRC_URI = "git://github.com/huggingface/transformers;protocol=https;nobranch=1;rev=0ea877911a11499053df677befd4b35b172ff502"
 
 inherit setuptools3
 
