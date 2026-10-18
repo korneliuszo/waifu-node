@@ -43,8 +43,8 @@ LIC_FILES_CHKSUM = " \
 SRC_URI = "git://github.com/flashinfer-ai/flashinfer;protocol=https;nobranch=1;branch=master"
 
 # Modify these as desired
-PV = "0.6.13"
-SRCREV = "57ba7eeb7ea3003a2d6ad5d9a057c4f952709bac"
+PV = "0.7.2"
+SRCREV = "d84335d8c54e0c8f9f7e22faa15c7e34a58abf94"
 
 DEPENDS += "python3-apache-tvm-ffi-native"
 
