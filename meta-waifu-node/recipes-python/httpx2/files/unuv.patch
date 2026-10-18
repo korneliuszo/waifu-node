@@ -1,0 +1,63 @@
+Upstream-Status: Inappropriate [oe-specific]
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 283c6ea..e2ffc19 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,16 +1,7 @@
+ [build-system]
+-requires = ["hatchling", "hatch-fancy-pypi-readme", "uv-dynamic-versioning>=0.14.1"]
++requires = ["hatchling"]
+ build-backend = "hatchling.build"
+ 
+-[tool.hatch.version]
+-source = "uv-dynamic-versioning"
+-
+-[tool.uv-dynamic-versioning]
+-vcs = "git"
+-style = "pep440"
+-bump = true
+-fallback-version = "0.0.0"
+-
+ [project]
+ name = "httpx2"
+ description = "The next generation HTTP client."
+@@ -41,12 +32,11 @@ classifiers = [
+     "Programming Language :: Python :: 3.15",
+     "Topic :: Internet :: WWW/HTTP",
+ ]
+-dynamic = ["readme", "version", "dependencies"]
++version = "2.13.1"
+ 
+-[tool.hatch.metadata.hooks.uv-dynamic-versioning]
+ dependencies = [
+     "truststore>=0.10; sys_platform != 'emscripten'",
+-    "httpcore2=={{ version }}; sys_platform != 'emscripten'",
++    "httpcore2==2.13.1; sys_platform != 'emscripten'",
+     "anyio>=4.10; sys_platform != 'emscripten'",
+     "httpx2-jsfetch; sys_platform == 'emscripten' and python_version >= '3.12'",
+     "idna>=3.18",
+@@ -94,23 +84,3 @@ include = ["/httpx2", "/CHANGELOG.md"]
+ 
+ [tool.hatch.build.targets.wheel]
+ packages = ["httpx2"]
+-
+-[tool.hatch.metadata.hooks.fancy-pypi-readme]
+-content-type = "text/markdown"
+-
+-[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+-path = "../../README.md"
+-
+-[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+-text = "\n## Release Information\n\n"
+-
+-[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+-path = "CHANGELOG.md"
+-pattern = "\n(## [0-9].+?)(?=\n## |$)"
+-
+-[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+-text = "\n---\n\n[Full changelog](https://github.com/pydantic/httpx2/blob/main/src/httpx2/CHANGELOG.md)\n"
+-
+-[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+-pattern = 'src="(docs/img/.*?)"'
+-replacement = 'src="https://raw.githubusercontent.com/pydantic/httpx2/main/\1"'
