@@ -22,5 +22,16 @@ export TRITON_PTXAS_BLACKWELL_PATH="$TRITON_PTXAS_PATH"
 export TORCH_CUDA_ARCH_LIST=11.0
 export CXX=aarch64-oe-linux-g++
 export CC=aarch64-oe-linux-gcc
-OMP_NUM_THREADS=10 HF_HUB_DISABLE_XET=1 CUDA_HOME=/usr/local/cuda-13.2/ vllm serve Qwen/Qwen3.6-35B-A3B-FP8 --reasoning-parser qwen3 --enable-auto-tool-choice --tool-call-parser qwen3_coder --gpu-memory-utilization 0.65
+OMP_NUM_THREADS=10 vllm \
+    serve Qwen/Qwen3.6-35B-A3B-FP8 \
+    --reasoning-parser qwen3 \
+    --enable-auto-tool-choice \
+    --tool-call-parser qwen3_coder \
+    --gpu-memory-utilization 0.65  \
+    --speculative-config '{"method":"mtp","num_speculative_tokens":3}' \
+    --enable-prefix-caching \
+    --enable-expert-parallel \
+    --kv-cache-dtype fp8 \
+    --attention-config.indexer_kv_dtype fp8 \
+
 ```
