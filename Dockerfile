@@ -63,6 +63,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         xz-utils \
         zstd \
         gfortran \
+        quilt \
     && locale-gen en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 
