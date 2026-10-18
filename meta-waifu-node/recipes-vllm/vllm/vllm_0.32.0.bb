@@ -20,7 +20,7 @@ python3-sympy python3-mpmath \
 python3-sympy-native python3-mpmath-native \
 "
 
-SRC_URI = "git://github.com/vllm-project/vllm;protocol=https;branch=releases/v0.31.0;name=default"
+SRC_URI = "git://github.com/vllm-project/vllm;protocol=https;branch=releases/v0.32.0;name=default"
 SRC_URI += " file://patch-setuptools-ver.patch "
 SRC_URI += " file://cuda_enable_hacks.patch "
 SRC_URI += " file://cmake-pin.patch "
@@ -29,13 +29,14 @@ SRC_URI += " file://unpin-torch.patch "
 
 SRC_URI += " git://github.com/triton-lang/triton.git;protocol=https;nobranch=1;rev=0add68262ab0a2e33b84524346cb27cbb2787356;subdir=triton;name=triton "
 SRC_URI += " git://github.com/google/googletest;protocol=https;nobranch=1;rev=52eb8108c5bdec04579160ae17225d66034bd723;subdir=googletest;name=googletest "
-SRC_URI += " git://github.com/deepseek-ai/DeepGEMM;protocol=https;nobranch=1;rev=8b1392b978f5a03c828dd1711090d7fb50958b8a;subdir=deepgemm;name=deepgemm "
+SRC_URI += " git://github.com/vllm-project/DeepGEMM;protocol=https;nobranch=1;rev=1e1842a833699298f7afc02eefb2ed168fff6938;subdir=deepgemm;name=deepgemm "
 SRC_URI += " git://github.com/vllm-project/FlashMLA;protocol=https;nobranch=1;rev=0eee43b12f034b657133cf2afca6a72ebb6efccf;subdir=flashmla;name=flashmla "
 SRC_URI += " git://github.com/IST-DASLab/qutlass;protocol=https;nobranch=1;rev=e74319e3405ce6d71965732880f5dc1f52371f64;subdir=qutlass;name=qutlass "
 SRC_URI += " git://github.com/vllm-project/flash-attention;protocol=https;nobranch=1;rev=9cd61de38763d712bb6ce56e2a02cc2bf718c89f;subdir=flashattention;name=flashattention "
-SRC_URI += " git://github.com/vllm-project/MSA;protocol=https;nobranch=1;rev=f355c37eb4e1413f21ee2ad8bbad25079e6bef9d;subdir=fmha_sm100;name=fmha_sm100 "
+SRC_URI += " git://github.com/vllm-project/MSA;protocol=https;nobranch=1;rev=968061ab16cb14991a5c7d4c0e8eabf531be0dcf;subdir=fmha_sm100;name=fmha_sm100 "
 SRC_URI += " git://github.com/vllm-project/FlashKDA;protocol=https;nobranch=1;rev=17a037d98da546deb4591e967cf961a43c034d8b;subdir=flashkda;name=flashkda "
 SRC_URI += " git://github.com/vllm-project/tml-fa4;protocol=https;nobranch=1;rev=75765e76a9c2c012c1f6ecd64577eb646eb4d303;subdir=tml_fa4;name=tml_fa4 "
+SRC_URI += " git://github.com/vllm-project/DeepSelect;protocol=https;nobranch=1;rev=d96d33afe1fab0d6066da49cdc91e64c2bee65ea;subdir=deepselect;name=deepselect "
 
 SRC_URI += " file://flashattention-py314.patch;patchdir=${UNPACKDIR}/flashattention "
 SRC_URI += " file://removesm100.patch;patchdir=${UNPACKDIR}/flashattention "
@@ -48,8 +49,8 @@ inherit cargo
 
 
 # Modify these as desired
-PV = "0.31.0"
-SRCREV_default = "db9527a46873454610df6dbedf79a36d6bf1a7f6"
+PV = "0.32.0"
+SRCREV_default = "5df63a7203cdb9328d824a27b682e77c7b9928be"
 
 CARGO_SRC_DIR = "rust/"
 
@@ -103,6 +104,7 @@ do_compile:prepend(){
     export VLLM_CUTLASS_SRC_DIR="${UNPACKDIR}/cutlass/"
     export FMHA_SM100_SRC_DIR="${UNPACKDIR}/fmha_sm100/"
     export DEEPGEMM_SRC_DIR="${UNPACKDIR}/deepgemm/"
+    export DEEPSELECT_SRC_DIR="${UNPACKDIR}/deepselect/"
     export GOOGLETEST_DIR="${UNPACKDIR}/googletest/"
     export FLASH_MLA_SRC_DIR="${UNPACKDIR}/flashmla/"  
     export QUTLASS_SRC_DIR="${UNPACKDIR}/qutlass/"

@@ -209,6 +209,10 @@ SRC_URI[brotli-8.0.4.sha256sum] = "5cc91aac060a7a1e25823bdccbfb6af1875b88f17c6da
 SRC_URI[brotli-decompressor-5.0.3.sha256sum] = "3a32acac15fe1967bc3986b2a6347dffc965602354ea6f450ad07e8bfd253583"
 SRC_URI += "crate://crates.io/brotli-decompressor/5.0.3 "
 SRC_URI[brotli-decompressor-5.0.3.sha256sum] = "3a32acac15fe1967bc3986b2a6347dffc965602354ea6f450ad07e8bfd253583"
+# # # bs58 (0.5.1) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[bs58-0.5.1.sha256sum] = "bf88ba1141d185c399bee5288d850d63b8369520c1eafc32a0430b5b6c287bf4"
+SRC_URI += "crate://crates.io/bs58/0.5.1 "
+SRC_URI[bs58-0.5.1.sha256sum] = "bf88ba1141d185c399bee5288d850d63b8369520c1eafc32a0430b5b6c287bf4"
 # # # bstr (1.12.1) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[bstr-1.12.1.sha256sum] = "63044e1ae8e69f3b5a92c736ca6269b8d12fa7efe39bf34ddb06d102cf0e2cab"
 SRC_URI += "crate://crates.io/bstr/1.12.1 "
@@ -261,6 +265,10 @@ SRC_URI[cfg-if-1.0.4.sha256sum] = "9330f8b2ff13f34540b44e946ef35111825727b38d332
 SRC_URI += "crate://crates.io/cfg-if/1.0.4 "
 SRC_URI[cfg-if-1.0.4.sha256sum] = "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801"
 
+# # # chacha20 (0.10.2) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[chacha20-0.10.2.sha256sum] = "65c35e4b699c7e15ccbe7ee35c005e4fc0a278d22238a2857e6ce2dadeda1b06"
+SRC_URI += "crate://crates.io/chacha20/0.10.2 "
+SRC_URI[chacha20-0.10.2.sha256sum] = "65c35e4b699c7e15ccbe7ee35c005e4fc0a278d22238a2857e6ce2dadeda1b06"
 # # # chrono (0.4.44) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[chrono-0.4.44.sha256sum] = "c673075a2e0e5f4a1dde27ce9dee1ea4558c7ffe648f576438a20ca1d2acc4b0"
 SRC_URI += "crate://crates.io/chrono/0.4.44 "
@@ -945,6 +953,16 @@ SRC_URI[jiff-0.2.23.sha256sum] = "1a3546dc96b6d42c5f24902af9e2538e82e39ad350b0c7
 SRC_URI[jiff-static-0.2.23.sha256sum] = "2a8c8b344124222efd714b73bb41f8b5120b27a7cc1c75593a6ff768d9d05aa4"
 SRC_URI += "crate://crates.io/jiff-static/0.2.23 "
 SRC_URI[jiff-static-0.2.23.sha256sum] = "2a8c8b344124222efd714b73bb41f8b5120b27a7cc1c75593a6ff768d9d05aa4"
+
+#  # jiff-tzdb (0.1.8) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[jiff-tzdb-0.1.8.sha256sum] = "142bd39932ad231f10513df9ab62661fead8719872150b7ad02a2df79f4e141e"
+SRC_URI += "crate://crates.io/jiff-tzdb/0.1.8 "
+SRC_URI[jiff-tzdb-0.1.8.sha256sum] = "142bd39932ad231f10513df9ab62661fead8719872150b7ad02a2df79f4e141e"
+
+# # # jiff-tzdb-platform (0.1.3) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[jiff-tzdb-platform-0.1.3.sha256sum] = "875a5a69ac2bab1a891711cf5eccbec1ce0341ea805560dcd90b7a2e925132e8"
+SRC_URI += "crate://crates.io/jiff-tzdb-platform/0.1.3 "
+SRC_URI[jiff-tzdb-platform-0.1.3.sha256sum] = "875a5a69ac2bab1a891711cf5eccbec1ce0341ea805560dcd90b7a2e925132e8"
 # # # jobserver (0.1.34) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[jobserver-0.1.34.sha256sum] = "9afb3de4395d6b3e67a780b6de64b51c978ecf11cb9a462c66be7d4ca9039d33"
 SRC_URI += "crate://crates.io/jobserver/0.1.34 "
@@ -1003,9 +1021,6 @@ SRC_URI[litrs-1.0.0.sha256sum] = "11d3d7f243d5c5a8b9bb5d6dd2b1602c0cb0b9db1621ba
 SRC_URI += "crate://crates.io/litrs/1.0.0 "
 SRC_URI[litrs-1.0.0.sha256sum] = "11d3d7f243d5c5a8b9bb5d6dd2b1602c0cb0b9db1621bafc7ed66e35ff9fe092"
 
-# # # llm-multimodal (1.7.1) [git+https://github.com/smg-project/llm-multimodal?rev=f0985ef65967615db2c79279aa07818499301bfd#f0985ef65967615db2c79279aa07818499301bfd]
-SRC_URI += "git://github.com/smg-project/llm-multimodal;rev=f0985ef65967615db2c79279aa07818499301bfd;protocol=https;nobranch=1;name=llm-multimodal;destsuffix=llm-multimodal-1.7.1/ "
-EXTRA_OECARGO_PATHS += " ${UNPACKDIR}/llm-multimodal-1.7.1/ "
 # # # lock_api (0.4.14) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[lock_api-0.4.14.sha256sum] = "224399e74b87b5f3557511d98dff8b14089b3dadafcab6bb93eab67d3aace965"
 SRC_URI += "crate://crates.io/lock_api/0.4.14 "
@@ -1262,9 +1277,6 @@ SRC_URI[option-ext-0.2.0.sha256sum] = "04744f49eae99ab78e0d5c0b603ab218f515ea8cf
 SRC_URI += "crate://crates.io/option-ext/0.2.0 "
 SRC_URI[option-ext-0.2.0.sha256sum] = "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d"
 
-# # # oss-harmony (0.0.11) [git+https://github.com/oss-harmony/harmony?tag=v0.0.11#76e849426cc092f84509e31a17027755f67d662a]
-SRC_URI += "git://github.com/oss-harmony/harmony;tag=v0.0.11;protocol=https;nobranch=1;name=oss-harmony;destsuffix=oss-harmony-0.0.11/ "
-EXTRA_OECARGO_PATHS += " ${UNPACKDIR}/oss-harmony-0.0.11/ "
 
 #  # parking (2.2.1) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[parking-2.2.1.sha256sum] = "f38d5652c16fde515bb1ecef450ab0f6a219d619a7274976324d5e377f7dceba"
@@ -1464,32 +1476,6 @@ SRC_URI[pulldown-cmark-to-cmark-22.0.0.sha256sum] = "50793def1b900256624a7094394
 SRC_URI[pxfm-0.1.29.sha256sum] = "e0c5ccf5294c6ccd63a74f1565028353830a9c2f5eb0c682c355c471726a6e3f"
 SRC_URI += "crate://crates.io/pxfm/0.1.29 "
 SRC_URI[pxfm-0.1.29.sha256sum] = "e0c5ccf5294c6ccd63a74f1565028353830a9c2f5eb0c682c355c471726a6e3f"
-
-# # # pyo3 (0.28.3) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[pyo3-0.28.3.sha256sum] = "91fd8e38a3b50ed1167fb981cd6fd60147e091784c427b8f7183a7ee32c31c12"
-SRC_URI += "crate://crates.io/pyo3/0.28.3 "
-SRC_URI[pyo3-0.28.3.sha256sum] = "91fd8e38a3b50ed1167fb981cd6fd60147e091784c427b8f7183a7ee32c31c12"
-# # # pyo3-build-config (0.28.3) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[pyo3-build-config-0.28.3.sha256sum] = "e368e7ddfdeb98c9bca7f8383be1648fd84ab466bf2bc015e94008db6d35611e"
-SRC_URI += "crate://crates.io/pyo3-build-config/0.28.3 "
-SRC_URI[pyo3-build-config-0.28.3.sha256sum] = "e368e7ddfdeb98c9bca7f8383be1648fd84ab466bf2bc015e94008db6d35611e"
-# # # pyo3-ffi (0.28.3) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[pyo3-ffi-0.28.3.sha256sum] = "7f29e10af80b1f7ccaf7f69eace800a03ecd13e883acfacc1e5d0988605f651e"
-SRC_URI += "crate://crates.io/pyo3-ffi/0.28.3 "
-SRC_URI[pyo3-ffi-0.28.3.sha256sum] = "7f29e10af80b1f7ccaf7f69eace800a03ecd13e883acfacc1e5d0988605f651e"
-# # # pyo3-macros (0.28.3) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[pyo3-macros-0.28.3.sha256sum] = "df6e520eff47c45997d2fc7dd8214b25dd1310918bbb2642156ef66a67f29813"
-SRC_URI += "crate://crates.io/pyo3-macros/0.28.3 "
-SRC_URI[pyo3-macros-0.28.3.sha256sum] = "df6e520eff47c45997d2fc7dd8214b25dd1310918bbb2642156ef66a67f29813"
-# # # pyo3-macros-backend (0.28.3) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[pyo3-macros-backend-0.28.3.sha256sum] = "c4cdc218d835738f81c2338f822078af45b4afdf8b2e33cbb5916f108b813acb"
-SRC_URI += "crate://crates.io/pyo3-macros-backend/0.28.3 "
-SRC_URI[pyo3-macros-backend-0.28.3.sha256sum] = "c4cdc218d835738f81c2338f822078af45b4afdf8b2e33cbb5916f108b813acb"
-# # # pythonize (0.28.0) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[pythonize-0.28.0.sha256sum] = "0b79f670c9626c8b651c0581011b57b6ba6970bb69faf01a7c4c0cfc81c43f95"
-SRC_URI += "crate://crates.io/pythonize/0.28.0 "
-SRC_URI[pythonize-0.28.0.sha256sum] = "0b79f670c9626c8b651c0581011b57b6ba6970bb69faf01a7c4c0cfc81c43f95"
-
 #  # quick-error (2.0.1) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[quick-error-2.0.1.sha256sum] = "a993555f31e5a609f617c12db6250dedcac1b0a85076912c436e6fc9b2c8e6a3"
 SRC_URI += "crate://crates.io/quick-error/2.0.1 "
@@ -1509,14 +1495,18 @@ SRC_URI[r-efi-6.0.0.sha256sum] = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136
 SRC_URI += "crate://crates.io/r-efi/6.0.0 "
 SRC_URI[r-efi-6.0.0.sha256sum] = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
 
-# # # rand (0.8.5) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[rand-0.8.5.sha256sum] = "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404"
-SRC_URI += "crate://crates.io/rand/0.8.5 "
-SRC_URI[rand-0.8.5.sha256sum] = "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404"
-# # # rand (0.9.2) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[rand-0.9.2.sha256sum] = "6db2770f06117d490610c7488547d543617b21bfa07796d7a12f6f1bd53850d1"
-SRC_URI += "crate://crates.io/rand/0.9.2 "
-SRC_URI[rand-0.9.2.sha256sum] = "6db2770f06117d490610c7488547d543617b21bfa07796d7a12f6f1bd53850d1"
+# # # rand (0.8.6) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[rand-0.8.6.sha256sum] = "5ca0ecfa931c29007047d1bc58e623ab12e5590e8c7cc53200d5202b69266d8a"
+SRC_URI += "crate://crates.io/rand/0.8.6 "
+SRC_URI[rand-0.8.6.sha256sum] = "5ca0ecfa931c29007047d1bc58e623ab12e5590e8c7cc53200d5202b69266d8a"
+# # # rand (0.9.5) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[rand-0.9.5.sha256sum] = "b9ef1d0d795eb7d84685bca4f72f3649f064e6641543d3a8c415898726a57b41"
+SRC_URI += "crate://crates.io/rand/0.9.5 "
+SRC_URI[rand-0.9.5.sha256sum] = "b9ef1d0d795eb7d84685bca4f72f3649f064e6641543d3a8c415898726a57b41"
+# # # rand (0.10.3) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[rand-0.10.3.sha256sum] = "65c9fb96cbc91e3478eaae79a69fcd3f1ae4ad052e471fe6732fff548984b4af"
+SRC_URI += "crate://crates.io/rand/0.10.3 "
+SRC_URI[rand-0.10.3.sha256sum] = "65c9fb96cbc91e3478eaae79a69fcd3f1ae4ad052e471fe6732fff548984b4af"
 # # # rand_chacha (0.3.1) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[rand_chacha-0.3.1.sha256sum] = "e6c10a63a0fa32252be49d21e7709d4d4baf8d231c2dbce1eaa8141b9b127d88"
 SRC_URI += "crate://crates.io/rand_chacha/0.3.1 "
@@ -1525,14 +1515,20 @@ SRC_URI[rand_chacha-0.3.1.sha256sum] = "e6c10a63a0fa32252be49d21e7709d4d4baf8d23
 SRC_URI[rand_chacha-0.9.0.sha256sum] = "d3022b5f1df60f26e1ffddd6c66e8aa15de382ae63b3a0c1bfc0e4d3e3f325cb"
 SRC_URI += "crate://crates.io/rand_chacha/0.9.0 "
 SRC_URI[rand_chacha-0.9.0.sha256sum] = "d3022b5f1df60f26e1ffddd6c66e8aa15de382ae63b3a0c1bfc0e4d3e3f325cb"
-# # # rand_core (0.6.4) [registry+https://github.com/rust-lang/crates.io-index]
+
+#  # rand_core (0.6.4) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[rand_core-0.6.4.sha256sum] = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
 SRC_URI += "crate://crates.io/rand_core/0.6.4 "
 SRC_URI[rand_core-0.6.4.sha256sum] = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
-# # # rand_core (0.9.5) [registry+https://github.com/rust-lang/crates.io-index]
+#  # rand_core (0.9.5) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[rand_core-0.9.5.sha256sum] = "76afc826de14238e6e8c374ddcc1fa19e374fd8dd986b0d2af0d02377261d83c"
 SRC_URI += "crate://crates.io/rand_core/0.9.5 "
 SRC_URI[rand_core-0.9.5.sha256sum] = "76afc826de14238e6e8c374ddcc1fa19e374fd8dd986b0d2af0d02377261d83c"
+#  # rand_core (0.10.1) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[rand_core-0.10.1.sha256sum] = "63b8176103e19a2643978565ca18b50549f6101881c443590420e4dc998a3c69"
+SRC_URI += "crate://crates.io/rand_core/0.10.1 "
+SRC_URI[rand_core-0.10.1.sha256sum] = "63b8176103e19a2643978565ca18b50549f6101881c443590420e4dc998a3c69"
+
 # # # rand_distr (0.5.1) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[rand_distr-0.5.1.sha256sum] = "6a8615d50dcf34fa31f7ab52692afec947c4dd0ab803cc87cb3b0b4570ff7463"
 SRC_URI += "crate://crates.io/rand_distr/0.5.1 "
@@ -1659,10 +1655,10 @@ SRC_URI[rustls-0.23.37.sha256sum] = "758025cb5fccfd3bc2fd74708fd4682be41d99e5dff
 SRC_URI[rustls-pki-types-1.14.1.sha256sum] = "30a7197ae7eb376e574fe940d068c30fe0462554a3ddbe4eca7838e049c937a9"
 SRC_URI += "crate://crates.io/rustls-pki-types/1.14.1 "
 SRC_URI[rustls-pki-types-1.14.1.sha256sum] = "30a7197ae7eb376e574fe940d068c30fe0462554a3ddbe4eca7838e049c937a9"
-# # # rustls-webpki (0.103.9) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[rustls-webpki-0.103.9.sha256sum] = "d7df23109aa6c1567d1c575b9952556388da57401e4ace1d15f79eedad0d8f53"
-SRC_URI += "crate://crates.io/rustls-webpki/0.103.9 "
-SRC_URI[rustls-webpki-0.103.9.sha256sum] = "d7df23109aa6c1567d1c575b9952556388da57401e4ace1d15f79eedad0d8f53"
+# # # rustls-webpki (0.103.15) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[rustls-webpki-0.103.15.sha256sum] = "f3c3cf1d8b1e7d4927e2d154c3fcb02979afb9939629c62cd9048d4f07b60ac2"
+SRC_URI += "crate://crates.io/rustls-webpki/0.103.15 "
+SRC_URI[rustls-webpki-0.103.15.sha256sum] = "f3c3cf1d8b1e7d4927e2d154c3fcb02979afb9939629c62cd9048d4f07b60ac2"
 # # # rustpython-ast (0.4.0) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[rustpython-ast-0.4.0.sha256sum] = "4cdaf8ee5c1473b993b398c174641d3aa9da847af36e8d5eb8291930b72f31a5"
 SRC_URI += "crate://crates.io/rustpython-ast/0.4.0 "
@@ -1688,10 +1684,10 @@ SRC_URI[rustversion-1.0.22.sha256sum] = "b39cdef0fa800fc44525c84ccb54a029961a821
 SRC_URI[ryu-1.0.23.sha256sum] = "9774ba4a74de5f7b1c1451ed6cd5285a32eddb5cccb8cc655a4e50009e06477f"
 SRC_URI += "crate://crates.io/ryu/1.0.23 "
 SRC_URI[ryu-1.0.23.sha256sum] = "9774ba4a74de5f7b1c1451ed6cd5285a32eddb5cccb8cc655a4e50009e06477f"
-#  # saa (5.5.0) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[saa-5.5.0.sha256sum] = "16c7f49c9d5caa3bf4b3106900484b447b9253fe99670ceb81cb6cb5027855e1"
-SRC_URI += "crate://crates.io/saa/5.5.0 "
-SRC_URI[saa-5.5.0.sha256sum] = "16c7f49c9d5caa3bf4b3106900484b447b9253fe99670ceb81cb6cb5027855e1"
+#  # saa (5.6.2) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[saa-5.6.2.sha256sum] = "bd85992a680de788217d9c70b74aa7685b108cf1aba02f728fb27f1b27199ad1"
+SRC_URI += "crate://crates.io/saa/5.6.2 "
+SRC_URI[saa-5.6.2.sha256sum] = "bd85992a680de788217d9c70b74aa7685b108cf1aba02f728fb27f1b27199ad1"
 
 # # # same-file (1.0.6) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[same-file-1.0.6.sha256sum] = "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0bd1b4d7b6b0b68378900502"
@@ -1701,10 +1697,10 @@ SRC_URI[same-file-1.0.6.sha256sum] = "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0b
 SRC_URI[scc-2.4.0.sha256sum] = "46e6f046b7fef48e2660c57ed794263155d713de679057f2d0c169bfc6e756cc"
 SRC_URI += "crate://crates.io/scc/2.4.0 "
 SRC_URI[scc-2.4.0.sha256sum] = "46e6f046b7fef48e2660c57ed794263155d713de679057f2d0c169bfc6e756cc"
-# # # scc (3.6.9) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[scc-3.6.9.sha256sum] = "45bb5ce9efd4a6e7b0f86c2697fe4c1d78d1f4e6d988c54b752d577cafe22fe8"
-SRC_URI += "crate://crates.io/scc/3.6.9 "
-SRC_URI[scc-3.6.9.sha256sum] = "45bb5ce9efd4a6e7b0f86c2697fe4c1d78d1f4e6d988c54b752d577cafe22fe8"
+# # # scc (3.8.8) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[scc-3.8.8.sha256sum] = "5d5f8ca67c4f6208caf824037a6a9df0211b4e0937fccc4f543441f294d04511"
+SRC_URI += "crate://crates.io/scc/3.8.8 "
+SRC_URI[scc-3.8.8.sha256sum] = "5d5f8ca67c4f6208caf824037a6a9df0211b4e0937fccc4f543441f294d04511"
 # # # schannel (0.1.29) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[schannel-0.1.29.sha256sum] = "91c1b7e4904c873ef0710c1f407dde2e6287de2bebc1bbbf7d430bb7cbffd939"
 SRC_URI += "crate://crates.io/schannel/0.1.29 "
@@ -1734,10 +1730,10 @@ SRC_URI[scopeguard-1.2.0.sha256sum] = "94143f37725109f92c262ed2cf5e59bce7498c01b
 SRC_URI[sdd-3.0.10.sha256sum] = "490dcfcbfef26be6800d11870ff2df8774fa6e86d047e3e8c8a76b25655e41ca"
 SRC_URI += "crate://crates.io/sdd/3.0.10 "
 SRC_URI[sdd-3.0.10.sha256sum] = "490dcfcbfef26be6800d11870ff2df8774fa6e86d047e3e8c8a76b25655e41ca"
-#  # sdd (4.7.3) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[sdd-4.7.3.sha256sum] = "b21a75f5913ab130e4b369fb8693be25f29b983e2ecad4279df9bfa5dd8aaf3e"
-SRC_URI += "crate://crates.io/sdd/4.7.3 "
-SRC_URI[sdd-4.7.3.sha256sum] = "b21a75f5913ab130e4b369fb8693be25f29b983e2ecad4279df9bfa5dd8aaf3e"
+#  # sdd (4.8.11) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[sdd-4.8.11.sha256sum] = "a31877eee03686b905845993b5d9809a220c9dd5a10e9d6021d7ca67384c9070"
+SRC_URI += "crate://crates.io/sdd/4.8.11 "
+SRC_URI[sdd-4.8.11.sha256sum] = "a31877eee03686b905845993b5d9809a220c9dd5a10e9d6021d7ca67384c9070"
 
 # # # secrecy (0.10.3) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[secrecy-0.10.3.sha256sum] = "e891af845473308773346dc847b2c23ee78fe442e0472ac50e22a18a93d3ae5a"
@@ -1813,14 +1809,14 @@ SRC_URI[serde_tuple_macros-1.1.3.sha256sum] = "ec3a1e7d2eadec84deabd46ae061bf480
 SRC_URI[serde_urlencoded-0.7.1.sha256sum] = "d3491c14715ca2294c4d6a88f15e84739788c1d030eed8c110436aafdaa2f3fd"
 SRC_URI += "crate://crates.io/serde_urlencoded/0.7.1 "
 SRC_URI[serde_urlencoded-0.7.1.sha256sum] = "d3491c14715ca2294c4d6a88f15e84739788c1d030eed8c110436aafdaa2f3fd"
-# # # serde_with (3.18.0) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[serde_with-3.18.0.sha256sum] = "dd5414fad8e6907dbdd5bc441a50ae8d6e26151a03b1de04d89a5576de61d01f"
-SRC_URI += "crate://crates.io/serde_with/3.18.0 "
-SRC_URI[serde_with-3.18.0.sha256sum] = "dd5414fad8e6907dbdd5bc441a50ae8d6e26151a03b1de04d89a5576de61d01f"
-# # # serde_with_macros (3.18.0) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[serde_with_macros-3.18.0.sha256sum] = "d3db8978e608f1fe7357e211969fd9abdcae80bac1ba7a3369bb7eb6b404eb65"
-SRC_URI += "crate://crates.io/serde_with_macros/3.18.0 "
-SRC_URI[serde_with_macros-3.18.0.sha256sum] = "d3db8978e608f1fe7357e211969fd9abdcae80bac1ba7a3369bb7eb6b404eb65"
+# # # serde_with (3.22.0) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[serde_with-3.22.0.sha256sum] = "ee78f1fbe43ac4a0e47aadb3dbd357b69eb0d3793e948624cd03dd2750ab1c0a"
+SRC_URI += "crate://crates.io/serde_with/3.22.0 "
+SRC_URI[serde_with-3.22.0.sha256sum] = "ee78f1fbe43ac4a0e47aadb3dbd357b69eb0d3793e948624cd03dd2750ab1c0a"
+# # # serde_with_macros (3.22.0) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[serde_with_macros-3.22.0.sha256sum] = "8705578779c2b6bd90d84d66eb2e206b708b1a4d7b9f17641b293545bf1c7e46"
+SRC_URI += "crate://crates.io/serde_with_macros/3.22.0 "
+SRC_URI[serde_with_macros-3.22.0.sha256sum] = "8705578779c2b6bd90d84d66eb2e206b708b1a4d7b9f17641b293545bf1c7e46"
 # # # serial_test (3.4.0) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[serial_test-3.4.0.sha256sum] = "911bd979bf1070a3f3aa7b691a3b3e9968f339ceeec89e08c280a8a22207a32f"
 SRC_URI += "crate://crates.io/serial_test/3.4.0 "
@@ -2011,12 +2007,6 @@ SRC_URI[system-configuration-0.7.0.sha256sum] = "a13f3d0daba03132c0aa9767f98351b
 SRC_URI[system-configuration-sys-0.6.0.sha256sum] = "8e1d1b10ced5ca923a1fcb8d03e96b8d3268065d724548c0211415ff6ac6bac4"
 SRC_URI += "crate://crates.io/system-configuration-sys/0.6.0 "
 SRC_URI[system-configuration-sys-0.6.0.sha256sum] = "8e1d1b10ced5ca923a1fcb8d03e96b8d3268065d724548c0211415ff6ac6bac4"
-
-#  # target-lexicon (0.13.5) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[target-lexicon-0.13.5.sha256sum] = "adb6935a6f5c20170eeceb1a3835a49e12e19d792f6dd344ccc76a985ca5a6ca"
-SRC_URI += "crate://crates.io/target-lexicon/0.13.5 "
-SRC_URI[target-lexicon-0.13.5.sha256sum] = "adb6935a6f5c20170eeceb1a3835a49e12e19d792f6dd344ccc76a985ca5a6ca"
-
 # # # task-local (0.1.1) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[task-local-0.1.1.sha256sum] = "2972044a9e5e448a506a7ff6f0d03b566d8ef4cd6918a58fc59835a0f8666626"
 SRC_URI += "crate://crates.io/task-local/0.1.1 "
@@ -2091,6 +2081,12 @@ SRC_URI[tinystr-0.8.2.sha256sum] = "42d3e9c45c09de15d06dd8acf5f4e0e399e85927b7f0
 SRC_URI[tinytemplate-1.2.1.sha256sum] = "be4d6b5f19ff7664e8c98d03e2139cb510db9b0a60b55f8e8709b689d939b6bc"
 SRC_URI += "crate://crates.io/tinytemplate/1.2.1 "
 SRC_URI[tinytemplate-1.2.1.sha256sum] = "be4d6b5f19ff7664e8c98d03e2139cb510db9b0a60b55f8e8709b689d939b6bc"
+
+#  # tinyvec (1.13.3) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[tinyvec-1.13.3.sha256sum] = "fd3ca314f692efd6c868f8408f53fe444634a845f96c028b97d35f6a1f79f0ee"
+SRC_URI += "crate://crates.io/tinyvec/1.13.3 "
+SRC_URI[tinyvec-1.13.3.sha256sum] = "fd3ca314f692efd6c868f8408f53fe444634a845f96c028b97d35f6a1f79f0ee"
+
 # # # tls-listener (0.11.2) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[tls-listener-0.11.2.sha256sum] = "1461056cc1ef47003f7ee16e4cef3741068d4c7f6b627bfce49b7c00c120a530"
 SRC_URI += "crate://crates.io/tls-listener/0.11.2 "
@@ -2601,10 +2597,10 @@ SRC_URI[writeable-0.6.2.sha256sum] = "9edde0db4769d2dc68579893f2306b26c6ecfbe0ef
 SRC_URI += "crate://crates.io/writeable/0.6.2 "
 SRC_URI[writeable-0.6.2.sha256sum] = "9edde0db4769d2dc68579893f2306b26c6ecfbe0ef499b013d731b7b9247e0b9"
 
-# # # xgrammar-structural-tag (0.3.0+xgrammar.0.2.7.82505d0) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[xgrammar-structural-tag-0.3.0+xgrammar.0.2.7.82505d0.sha256sum] = "3864005575c2ab76057f789898f59fb9fa1378d07c5ceabc24764e012d0e90bb"
-SRC_URI += "crate://crates.io/xgrammar-structural-tag/0.3.0+xgrammar.0.2.7.82505d0 "
-SRC_URI[xgrammar-structural-tag-0.3.0+xgrammar.0.2.7.82505d0.sha256sum] = "3864005575c2ab76057f789898f59fb9fa1378d07c5ceabc24764e012d0e90bb"
+# # # xgrammar-structural-tag (0.4.1+xgrammar.0.2.8.9778737) [registry+https://github.com/rust-lang/crates.io-index]
+SRC_URI[xgrammar-structural-tag-0.4.1+xgrammar.0.2.8.9778737.sha256sum] = "06637fe6ff753ef929b4cea2933b9432f78335255c6931dc748957122b9b492c"
+SRC_URI += "crate://crates.io/xgrammar-structural-tag/0.4.1+xgrammar.0.2.8.9778737 "
+SRC_URI[xgrammar-structural-tag-0.4.1+xgrammar.0.2.8.9778737.sha256sum] = "06637fe6ff753ef929b4cea2933b9432f78335255c6931dc748957122b9b492c"
 # # # yoke (0.8.1) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[yoke-0.8.1.sha256sum] = "72d6e5c6afb84d73944e5cedb052c4680d5657337201555f9f2a16b7406d4954"
 SRC_URI += "crate://crates.io/yoke/0.8.1 "
@@ -2635,10 +2631,6 @@ SRC_URI[zeroize-1.8.2.sha256sum] = "b97154e67e32c85465826e8bcc1c59429aaaf107c1e4
 SRC_URI += "crate://crates.io/zeroize/1.8.2 "
 SRC_URI[zeroize-1.8.2.sha256sum] = "b97154e67e32c85465826e8bcc1c59429aaaf107c1e4a9e53c8d8ccd5eff88d0"
 
-# # # zeromq (0.6.0) [registry+https://github.com/rust-lang/crates.io-index]
-SRC_URI[zeromq-0.6.0.sha256sum] = "efb2c254fd8f366755335c9e43b865f8484fe3bd717d65ffe7c3f28852863030"
-SRC_URI += "crate://crates.io/zeromq/0.6.0 "
-SRC_URI[zeromq-0.6.0.sha256sum] = "efb2c254fd8f366755335c9e43b865f8484fe3bd717d65ffe7c3f28852863030"
 # # # zerotrie (0.2.3) [registry+https://github.com/rust-lang/crates.io-index]
 SRC_URI[zerotrie-0.2.3.sha256sum] = "2a59c17a5562d507e4b54960e8569ebee33bee890c70aa3fe7b97e85a9fd7851"
 SRC_URI += "crate://crates.io/zerotrie/0.2.3 "
